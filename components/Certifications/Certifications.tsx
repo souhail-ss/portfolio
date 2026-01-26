@@ -30,54 +30,60 @@ export const Certifications: React.FC = () => {
     threshold: 0.1,
   });
 
-  const certification = portfolioData.certifications[0];
+  const certifications = portfolioData.certifications;
+  const hasCertifications = certifications && certifications.length > 0;
 
   return (
     <S.CertificationsSection id="certifications" ref={ref}>
       <S.Container>
         <S.Grid>
           {/* Certifications */}
-          <S.CertificationsColumn
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
-          >
-            <S.ColumnHeader>
-              <S.Label>Credentials</S.Label>
-              <S.ColumnTitle>Certifications</S.ColumnTitle>
-            </S.ColumnHeader>
-
-            <S.CertificationCard
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
+          {hasCertifications && (
+            <S.CertificationsColumn
+              initial={{ opacity: 0, x: -30 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5 }}
             >
-              <S.CertHeader>
-                <S.CertIcon>
-                  <Award />
-                </S.CertIcon>
-                <S.CertInfo>
-                  <S.CertName>{certification.name}</S.CertName>
-                  <S.CertAuthority>{certification.authority}</S.CertAuthority>
-                </S.CertInfo>
-              </S.CertHeader>
+              <S.ColumnHeader>
+                <S.Label>Credentials</S.Label>
+                <S.ColumnTitle>Certifications</S.ColumnTitle>
+              </S.ColumnHeader>
 
-              <S.CertMeta>
-                <S.CertDate>
-                  <Calendar />
-                  {certification.issued}
-                </S.CertDate>
-                <S.CertLink
-                  href={certification.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {certifications.map((certification, index) => (
+                <S.CertificationCard
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                 >
-                  Voir credential
-                  <ExternalLink />
-                </S.CertLink>
-              </S.CertMeta>
-            </S.CertificationCard>
-          </S.CertificationsColumn>
+                  <S.CertHeader>
+                    <S.CertIcon>
+                      <Award />
+                    </S.CertIcon>
+                    <S.CertInfo>
+                      <S.CertName>{certification.name}</S.CertName>
+                      <S.CertAuthority>{certification.authority}</S.CertAuthority>
+                    </S.CertInfo>
+                  </S.CertHeader>
+
+                  <S.CertMeta>
+                    <S.CertDate>
+                      <Calendar />
+                      {certification.issued}
+                    </S.CertDate>
+                    <S.CertLink
+                      href={certification.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Voir credential
+                      <ExternalLink />
+                    </S.CertLink>
+                  </S.CertMeta>
+                </S.CertificationCard>
+              ))}
+            </S.CertificationsColumn>
+          )}
 
           {/* Languages */}
           <S.LanguagesColumn
