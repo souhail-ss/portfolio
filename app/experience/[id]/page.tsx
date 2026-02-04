@@ -29,11 +29,11 @@ import { WeneedsArchitecture } from '@/components/Experience/WeneedsArchitecture
 
 // Company colors
 const companyColors: { [key: string]: string } = {
-  'Weneeds': '#6366F1',
+  'Weneeds': '#FF6B00',
   'Capgemini': '#0070AD',
   '42c': '#FF6B00',
   'Freelance': '#10B981',
-  'default': '#6366F1'
+  'default': '#FF6B00'
 };
 
 const getCompanyColor = (company: string) => {
@@ -201,7 +201,7 @@ const TypeBadge = styled.span<{ $type: string }>`
   color: ${({ $type }) => {
     switch ($type) {
       case 'full-time': return '#60A5FA';
-      case 'freelance': return '#A78BFA';
+      case 'freelance': return '#FF8533';
       case 'internship': return '#FBBF24';
       default: return '#9CA3AF';
     }
@@ -770,7 +770,7 @@ export default function ExperienceDetailPage() {
   const nextExperience = currentIndex < database.experiences.length - 1 ? database.experiences[currentIndex + 1] : null;
 
   const isWeneeds = id === 'weneeds';
-  const color = experience ? getCompanyColor(experience.company) : '#6366F1';
+  const color = experience ? getCompanyColor(experience.company) : '#FF6B00';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -967,16 +967,11 @@ export default function ExperienceDetailPage() {
                             <CardTitle>{config.title}</CardTitle>
                             <CardCount>{items.length}</CardCount>
                           </CardHeader>
-                          {items.slice(0, 5).map((item, index) => (
+                          {items.map((item, index) => (
                             <ListItem key={index} $color={color}>
                               {item}
                             </ListItem>
                           ))}
-                          {items.length > 5 && (
-                            <ListItem $color={color} style={{ opacity: 0.5 }}>
-                              +{items.length - 5} autres...
-                            </ListItem>
-                          )}
                         </Card>
                       );
                     })}

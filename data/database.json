@@ -5,11 +5,11 @@
     "lastName": "Ziyadi",
     "fullName": "Souhail Ziyadi",
     "title": "Développeur Full Stack",
-    "headline": "Full Stack Developer | React • Next.js • NestJS • Flutter",
+    "headline": "Full Stack Developer | React • Next.js • NestJS",
     "email": "souhail.ziyadi2022@outlook.com",
     "phone": "+33 7 66 58 63 30",
     "location": {
-      "city": "Cachan",
+      "city": "Paris",
       "region": "Île-de-France",
       "country": "France",
       "countryCode": "FR"
@@ -188,8 +188,8 @@
         "Tests Jest avec couverture robuste"
       ],
       "technologies": ["NestJS", "React", "Next.js", "TypeScript", "NX", "TypeORM", "PostgreSQL", "Jest", "React DnD", "styled-components", "Docker"],
-      "image": "",
-      "screenshots": [],
+      "image": "/projects/saas/weneeds-ai.jpg",
+      "screenshots": ["/projects/saas/weneeds.jpg"],
       "links": {
         "github": "",
         "live": "",
@@ -218,8 +218,8 @@
         "SQLite pour le développement"
       ],
       "technologies": ["NestJS", "React", "PostgreSQL", "SQLite", "TypeScript"],
-      "image": "",
-      "screenshots": [],
+      "image": "/projects/personal/notes-app-login.png",
+      "screenshots": ["/projects/personal/notes-app-dashboard.png"],
       "links": {
         "github": "https://github.com/souhail-ss",
         "live": "",
@@ -266,7 +266,7 @@
       "institutionUrl": "https://www.estiam.education",
       "logo": "/images/education/estiam-logo.jpg",
       "institutionFullName": "École supérieure des technologies de l'information appliquées aux métiers",
-      "color": "linear-gradient(135deg, #667eea 0%, #3B82F6 100%)",
+      "color": "linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%)",
       "degree": "Master Manager de projet Informatique",
       "fieldOfStudy": "Développement Web & Application Mobile",
       "level": "Master",

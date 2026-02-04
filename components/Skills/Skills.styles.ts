@@ -17,8 +17,8 @@ export const SectionLabel = styled(motion.div)`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
   padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.lg};
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(255, 107, 0, 0.1);
+  border: 1px solid rgba(255, 107, 0, 0.2);
   border-radius: ${({ theme }) => theme.borderRadius.full};
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -90,7 +90,7 @@ export const SkillCard = styled(motion.div)<{ featured?: boolean }>`
     bottom: 0;
     background: radial-gradient(
       600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(99, 102, 241, 0.06),
+      rgba(255, 107, 0, 0.06),
       transparent 40%
     );
     border-radius: inherit;
@@ -100,7 +100,7 @@ export const SkillCard = styled(motion.div)<{ featured?: boolean }>`
   }
 
   &:hover {
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: rgba(255, 107, 0, 0.3);
 
     &::before {
       opacity: 1;
@@ -112,8 +112,8 @@ export const CardIcon = styled.div<{ color?: string }>`
   width: 48px;
   height: 48px;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  background: ${({ color }) => color || 'rgba(99, 102, 241, 0.1)'};
-  border: 1px solid ${({ color }) => color ? `${color}40` : 'rgba(99, 102, 241, 0.2)'};
+  background: ${({ color }) => color || 'rgba(255, 107, 0, 0.1)'};
+  border: 1px solid ${({ color }) => color ? `${color}40` : 'rgba(255, 107, 0, 0.2)'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,12 +123,12 @@ export const CardIcon = styled.div<{ color?: string }>`
   svg {
     width: 24px;
     height: 24px;
-    color: ${({ color }) => color || '#6366F1'};
+    color: ${({ color }) => color || '#FF6B00'};
   }
 
   ${SkillCard}:hover & {
     transform: scale(1.1);
-    box-shadow: 0 0 20px ${({ color }) => color ? `${color}30` : 'rgba(99, 102, 241, 0.2)'};
+    box-shadow: 0 0 20px ${({ color }) => color ? `${color}30` : 'rgba(255, 107, 0, 0.2)'};
   }
 `;
 
@@ -155,10 +155,10 @@ export const SkillTags = styled.div`
 export const SkillTag = styled(motion.span)<{ highlighted?: boolean }>`
   padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.md};
   background: ${({ highlighted }) => highlighted
-    ? 'rgba(99, 102, 241, 0.15)'
+    ? 'rgba(255, 107, 0, 0.15)'
     : 'rgba(255, 255, 255, 0.03)'};
   border: 1px solid ${({ highlighted, theme }) => highlighted
-    ? 'rgba(99, 102, 241, 0.3)'
+    ? 'rgba(255, 107, 0, 0.3)'
     : theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   color: ${({ highlighted, theme }) => highlighted
@@ -169,7 +169,7 @@ export const SkillTag = styled(motion.span)<{ highlighted?: boolean }>`
   transition: all 0.3s;
 
   &:hover {
-    border-color: rgba(99, 102, 241, 0.4);
+    border-color: rgba(255, 107, 0, 0.4);
     color: ${({ theme }) => theme.colors.text};
     transform: translateY(-2px);
   }
@@ -225,8 +225,8 @@ export const TechBadge = styled(motion.span)`
   transition: all 0.3s;
 
   &:hover {
-    background: rgba(99, 102, 241, 0.1);
-    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 107, 0, 0.1);
+    border-color: rgba(255, 107, 0, 0.3);
     color: ${({ theme }) => theme.colors.text};
     transform: translateY(-2px);
   }

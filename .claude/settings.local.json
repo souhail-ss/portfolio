@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(copy \"C:\\\\Users\\\\souha\\\\Pictures\\\\Screenshots\\\\Capture d''écran 2026-01-26 131228.png\" \"C:\\\\Users\\\\souha\\\\Desktop\\\\work\\\\dailyApp\\\\portfolio\\\\public\\\\profile.png\")"
     ]
   }
 }

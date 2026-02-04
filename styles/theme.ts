@@ -1,26 +1,26 @@
 export const theme = {
   colors: {
-    // Primary palette - sophisticated blue/white
-    primary: '#FFFFFF',
-    primaryLight: '#F5F5F5',
-    primaryDark: '#E0E0E0',
-    secondary: '#6366F1',
-    accent: '#818CF8',
+    // Primary palette - Black & Orange
+    primary: '#FF6B00',
+    primaryLight: '#FF8533',
+    primaryDark: '#CC5500',
+    secondary: '#FF8C00',
+    accent: '#FFA500',
 
-    // Backgrounds - deep dark
-    background: '#030303',
-    backgroundLight: '#0A0A0A',
-    surface: '#111111',
-    surfaceLight: '#181818',
+    // Backgrounds - Deep black
+    background: '#0A0A0A',
+    backgroundLight: '#141414',
+    surface: '#1A1A1A',
+    surfaceLight: '#242424',
 
     // Text hierarchy
     text: '#FFFFFF',
-    textSecondary: '#A1A1AA',
-    textMuted: '#52525B',
+    textSecondary: '#A3A3A3',
+    textMuted: '#666666',
 
     // Borders
-    border: '#1F1F1F',
-    borderLight: '#2A2A2A',
+    border: '#2A2A2A',
+    borderLight: '#3A3A3A',
 
     // Status
     success: '#22C55E',
@@ -28,11 +28,11 @@ export const theme = {
     error: '#EF4444',
 
     // Gradients
-    gradient: 'linear-gradient(135deg, #FFFFFF 0%, #A1A1AA 100%)',
-    gradientPrimary: 'linear-gradient(135deg, #FFFFFF 0%, #6366F1 100%)',
-    gradientSubtle: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(129, 140, 248, 0.05) 100%)',
-    gradientDark: 'linear-gradient(180deg, #030303 0%, #0A0A0A 100%)',
-    gradientGlow: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
+    gradient: 'linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%)',
+    gradientPrimary: 'linear-gradient(135deg, #FF6B00 0%, #FFA500 100%)',
+    gradientSubtle: 'linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%)',
+    gradientDark: 'linear-gradient(180deg, #0A0A0A 0%, #141414 100%)',
+    gradientGlow: 'radial-gradient(circle, rgba(255, 107, 0, 0.2) 0%, transparent 70%)',
   },
   fonts: {
     primary: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
@@ -94,8 +94,8 @@ export const theme = {
     md: '0 4px 6px rgba(0, 0, 0, 0.4)',
     lg: '0 10px 25px rgba(0, 0, 0, 0.5)',
     xl: '0 20px 50px rgba(0, 0, 0, 0.6)',
-    glow: '0 0 40px rgba(99, 102, 241, 0.3)',
-    glowStrong: '0 0 60px rgba(99, 102, 241, 0.5)',
+    glow: '0 0 40px rgba(255, 107, 0, 0.3)',
+    glowStrong: '0 0 60px rgba(255, 107, 0, 0.5)',
     inner: 'inset 0 2px 4px rgba(0, 0, 0, 0.3)',
   },
   transitions: {

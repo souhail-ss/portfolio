@@ -179,8 +179,8 @@ export const SuggestionChip = styled(motion.button)`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
   padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(255, 107, 0, 0.1);
+  border: 1px solid rgba(255, 107, 0, 0.2);
   border-radius: ${({ theme }) => theme.borderRadius.full};
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.xs};
@@ -188,8 +188,8 @@ export const SuggestionChip = styled(motion.button)`
   transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: rgba(99, 102, 241, 0.2);
-    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(255, 107, 0, 0.2);
+    border-color: rgba(255, 107, 0, 0.4);
   }
 `;
 
@@ -219,7 +219,7 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.secondary};
-    background: rgba(99, 102, 241, 0.05);
+    background: rgba(255, 107, 0, 0.05);
   }
 
   &:disabled {

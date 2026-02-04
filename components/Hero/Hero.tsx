@@ -1,15 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Send } from 'lucide-react';
-import { portfolioData } from '../../data/portfolio.data';
-import { ChatModal } from './ChatModal';
-import { useChat } from '../../context/ChatContext';
+import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { portfolioData, profile } from '../../data/portfolio.data';
 import * as S from './Hero.styles';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
-  const [question, setQuestion] = useState('');
-  const { isOpen: isChatOpen, initialQuestion, openChat, openChatWithQuestion, closeChat } = useChat();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -31,18 +27,7 @@ export const Hero: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  const handleSubmitQuestion = () => {
-    if (question.trim()) {
-      openChatWithQuestion(question.trim());
-      setQuestion('');
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSubmitQuestion();
-    }
-  };
+  const technologies = ['TypeScript', 'NestJS', 'Next.js', 'React', 'PostgreSQL', 'MongoDB'];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -71,66 +56,127 @@ export const Hero: React.FC = () => {
     <S.HeroSection id="home" ref={containerRef}>
       <S.GridBackground />
 
-      <S.GlowOrb color="#6366F1" size={400} top="-10%" left="10%" />
-      <S.GlowOrb color="#818CF8" size={300} top="60%" left="80%" style={{ animationDelay: '-4s' }} />
-      <S.GlowOrb color="#6366F1" size={200} top="80%" left="20%" style={{ animationDelay: '-2s' }} />
+      <S.WaveBackground />
 
       <S.SpotlightEffect style={{ x: spotlightX, y: spotlightY }} />
 
       <div className="container">
-        <S.HeroContent>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <S.Name variants={itemVariants}>
-              {portfolioData.fullName}
-            </S.Name>
+<S.HeroContent>
+  {/* LEFT COLUMN */}
+  <S.LeftColumn>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <S.Name variants={itemVariants}>
+        {portfolioData.fullName}
+      </S.Name>
 
-            <S.Title variants={itemVariants}>
-              {portfolioData.headline}
-            </S.Title>
+      <S.Title variants={itemVariants}>
+        {portfolioData.headline}
+      </S.Title>
 
-            <S.ChatInputSection variants={itemVariants}>
-              <S.ChatInputWrapper>
-                <S.ChatInputCard>
-                  <S.ChatInput
-                    type="text"
-                    placeholder="Mon IA vous repond a ma place - Posez vos questions !"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                  />
-                  <S.ChatSubmitButton
-                    onClick={handleSubmitQuestion}
-                    disabled={!question.trim()}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Send />
-                  </S.ChatSubmitButton>
-                </S.ChatInputCard>
-              </S.ChatInputWrapper>
-            </S.ChatInputSection>
+      <S.StatsRow variants={itemVariants}>
+        <S.Stat>
+          <S.StatNumber>1+</S.StatNumber>
+          <S.StatLabel>Exp.</S.StatLabel>
+        </S.Stat>
+        <S.Stat>
+          <S.StatNumber>5+</S.StatNumber>
+          <S.StatLabel>Projects</S.StatLabel>
+        </S.Stat>
+        <S.Stat>
+          <S.StatNumber>15+</S.StatNumber>
+          <S.StatLabel>Technologies</S.StatLabel>
+        </S.Stat>
+      </S.StatsRow>
+    </motion.div>
+  </S.LeftColumn>
 
-            <S.StatsRow variants={itemVariants}>
-              <S.Stat>
-                <S.StatNumber>5+</S.StatNumber>
-                <S.StatLabel>Years Exp.</S.StatLabel>
-              </S.Stat>
-              <S.Stat>
-                <S.StatNumber>15+</S.StatNumber>
-                <S.StatLabel>Projects</S.StatLabel>
-              </S.Stat>
-              <S.Stat>
-                <S.StatNumber>20+</S.StatNumber>
-                <S.StatLabel>Technologies</S.StatLabel>
-              </S.Stat>
-            </S.StatsRow>
+  {/* RIGHT COLUMN - A propos */}
+  <S.RightColumn>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <S.AboutCard variants={itemVariants}>
+        <S.AboutHeader>
+          <S.ProfileImage>
+            <img src={profile.profileImage} alt={profile.fullName} />
+          </S.ProfileImage>
+          <S.ProfileInfo>
+            <S.AboutLabel>A propos</S.AboutLabel>
+            <S.Location>
+              <MapPin size={14} />
+              {profile.location.city}, {profile.location.country}
+            </S.Location>
+          </S.ProfileInfo>
+        </S.AboutHeader>
 
-          </motion.div>
-        </S.HeroContent>
+        <S.AboutDescription>
+          {profile.about.short}
+        </S.AboutDescription>
+
+        <S.TechTags>
+          {technologies.map((tech) => (
+            <S.TechTag key={tech}>{tech}</S.TechTag>
+          ))}
+        </S.TechTags>
+
+        <S.AboutActions>
+          <S.ActionButtons>
+            <S.CTAButton
+              href="#experience"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Voir mon parcours
+              <ArrowRight size={16} />
+            </S.CTAButton>
+            <S.DownloadButton
+              href={portfolioData.resumeUrl}
+              download
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Download size={16} />
+              CV
+            </S.DownloadButton>
+          </S.ActionButtons>
+          <S.SocialLinks>
+            <S.SocialLink
+              href={portfolioData.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Linkedin size={18} />
+            </S.SocialLink>
+            <S.SocialLink
+              href={portfolioData.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Github size={18} />
+            </S.SocialLink>
+            <S.SocialLink
+              href={`mailto:${portfolioData.email}`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Mail size={18} />
+            </S.SocialLink>
+          </S.SocialLinks>
+        </S.AboutActions>
+      </S.AboutCard>
+    </motion.div>
+  </S.RightColumn>
+</S.HeroContent>
       </div>
 
       <S.ScrollIndicator
@@ -144,12 +190,6 @@ export const Hero: React.FC = () => {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
       </S.ScrollIndicator>
-
-      <ChatModal
-        isOpen={isChatOpen}
-        onClose={closeChat}
-        initialQuestion={initialQuestion}
-      />
     </S.HeroSection>
   );
 };

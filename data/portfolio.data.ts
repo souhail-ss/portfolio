@@ -58,7 +58,14 @@ export const portfolioData: PortfolioData = {
     description: edu.description || ''
   })),
 
-  certifications: databaseJson.certifications.map(cert => ({
+  certifications: (databaseJson.certifications as Array<{
+    id: string;
+    name: string;
+    authority: string;
+    issued: string;
+    expires: string;
+    url: string;
+  }>).map(cert => ({
     id: cert.id,
     name: cert.name,
     authority: cert.authority,

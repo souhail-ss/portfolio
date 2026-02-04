@@ -1,7 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
-Sitemap: https://yasserloukniti.com/sitemap.xml
+Sitemap: https://souhailziyadi.com/sitemap.xml
 
 # Block AI crawlers
 User-agent: GPTBot

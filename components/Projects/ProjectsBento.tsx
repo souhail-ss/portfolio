@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Github, Globe, X, ExternalLink } from 'lucide-react';
+import { Github, Globe, X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { projects } from '../../data/portfolio.data';
 
 const ProjectsSection = styled.section`
@@ -209,9 +209,9 @@ const TechPill = styled.span`
 // More Projects Card
 const MoreProjectsCard = styled(motion.div)`
   position: relative;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.05) 0%, rgba(255, 140, 0, 0.05) 100%);
   border-radius: 20px;
-  border: 2px dashed rgba(99, 102, 241, 0.2);
+  border: 2px dashed rgba(255, 107, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,15 +221,15 @@ const MoreProjectsCard = styled(motion.div)`
   transition: all 0.3s ease;
 
   &:hover {
-    border-color: rgba(99, 102, 241, 0.4);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+    border-color: rgba(255, 107, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.08) 0%, rgba(255, 140, 0, 0.08) 100%);
   }
 `;
 
 const MoreNumber = styled.div`
   font-size: 48px;
   font-weight: 700;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -377,7 +377,7 @@ const FeatureItem = styled.li`
     transform: translateY(-50%);
     width: 6px;
     height: 6px;
-    background: rgba(99, 102, 241, 0.5);
+    background: rgba(255, 107, 0, 0.5);
     border-radius: 50%;
   }
 
@@ -410,6 +410,94 @@ const ModalActions = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 `;
 
+// Screenshot Carousel Styles
+const ScreenshotCarousel = styled.div`
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+`;
+
+const ScreenshotContainer = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+`;
+
+const ScreenshotImage = styled(motion.img)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+`;
+
+const CarouselNav = styled.button<{ $direction: 'left' | 'right' }>`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  ${({ $direction }) => $direction === 'left' ? 'left: 12px;' : 'right: 12px;'}
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
+  z-index: 10;
+  opacity: 0;
+
+  ${ScreenshotCarousel}:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const CarouselDots = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+`;
+
+const CarouselDot = styled.button<{ $active: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: ${({ $active }) => $active ? '#fff' : 'rgba(255, 255, 255, 0.4)'};
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  &:hover {
+    background: ${({ $active }) => $active ? '#fff' : 'rgba(255, 255, 255, 0.6)'};
+  }
+`;
+
 const ActionButton = styled.a<{ $primary?: boolean }>`
   display: inline-flex;
   align-items: center;
@@ -437,6 +525,71 @@ const ActionButton = styled.a<{ $primary?: boolean }>`
     height: 16px;
   }
 `;
+
+// Screenshot Carousel Component
+const ScreenshotSlideshow: React.FC<{ images: string[] }> = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  // Auto-switch every 4 seconds
+  useEffect(() => {
+    if (images.length <= 1 || isPaused) return;
+
+    const interval = setInterval(goToNext, 4000);
+    return () => clearInterval(interval);
+  }, [images.length, isPaused, goToNext]);
+
+  if (images.length === 0) return null;
+
+  return (
+    <ScreenshotCarousel
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <ScreenshotContainer>
+        <AnimatePresence mode="wait">
+          <ScreenshotImage
+            key={currentIndex}
+            src={images[currentIndex]}
+            alt={`Screenshot ${currentIndex + 1}`}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          />
+        </AnimatePresence>
+      </ScreenshotContainer>
+
+      {images.length > 1 && (
+        <>
+          <CarouselNav $direction="left" onClick={goToPrev}>
+            <ChevronLeft />
+          </CarouselNav>
+          <CarouselNav $direction="right" onClick={goToNext}>
+            <ChevronRight />
+          </CarouselNav>
+          <CarouselDots>
+            {images.map((_, index) => (
+              <CarouselDot
+                key={index}
+                $active={index === currentIndex}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </CarouselDots>
+        </>
+      )}
+    </ScreenshotCarousel>
+  );
+};
 
 export const ProjectsBento: React.FC = () => {
   const [ref, inView] = useInView({
@@ -561,7 +714,7 @@ export const ProjectsBento: React.FC = () => {
             ))}
 
             <MoreProjectsCard variants={itemVariants}>
-              <MoreNumber>+{projects.length + 10}</MoreNumber>
+              <MoreNumber>+4</MoreNumber>
               <MoreTitle>Autres projets</MoreTitle>
               <MoreDescription>
                 Applications, sites e-commerce, dashboards et solutions sur mesure
@@ -588,6 +741,17 @@ export const ProjectsBento: React.FC = () => {
               <CloseButton onClick={() => setSelectedProject(null)}>
                 <X />
               </CloseButton>
+
+              {/* Screenshot Slideshow */}
+              {(() => {
+                const allImages = [
+                  ...(selectedProject.image ? [selectedProject.image] : []),
+                  ...(selectedProject.screenshots || [])
+                ];
+                return allImages.length > 0 ? (
+                  <ScreenshotSlideshow images={allImages} />
+                ) : null;
+              })()}
 
               <ModalCategory>{selectedProject.category}</ModalCategory>
               <ModalTitle>{selectedProject.title}</ModalTitle>

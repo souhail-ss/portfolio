@@ -44,6 +44,50 @@ export const ModalContainer = styled(motion.div)`
   }
 `;
 
+export const ModalHeader = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 16px;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+`;
+
+export const ControlsRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const ControlButton = styled.button<{ $variant?: 'close' }>`
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: #e8e8e8;
+    color: ${({ $variant }) => $variant === 'close' ? '#ff5f57' : '#333'};
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+`;
+
 export const CloseButton = styled.button`
   position: absolute;
   top: 20px;
@@ -242,7 +286,7 @@ export const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #6366F1;
+    border-color: #FF6B00;
   }
 
   &:disabled {
@@ -257,7 +301,7 @@ export const SendButton = styled(motion.button)`
   justify-content: center;
   gap: 8px;
   padding: 16px 24px;
-  background: #6366F1;
+  background: #FF6B00;
   border: none;
   border-radius: 16px;
   color: #fff;
@@ -268,7 +312,7 @@ export const SendButton = styled(motion.button)`
   white-space: nowrap;
 
   &:hover:not(:disabled) {
-    background: #5558E3;
+    background: #CC5500;
   }
 
   &:disabled {

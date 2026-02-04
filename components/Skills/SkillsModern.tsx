@@ -408,15 +408,15 @@ export const SkillsModern: React.FC = () => {
             <StatLabel>Technologies</StatLabel>
           </StatItem>
           <StatItem>
-            <StatNumber>{categories}</StatNumber>
+            <StatNumber>3</StatNumber>
             <StatLabel>Domaines d'expertise</StatLabel>
           </StatItem>
           <StatItem>
-            <StatNumber>5+</StatNumber>
+            <StatNumber>1+</StatNumber>
             <StatLabel>Années d'expérience</StatLabel>
           </StatItem>
           <StatItem>
-            <StatNumber>20+</StatNumber>
+            <StatNumber>15+</StatNumber>
             <StatLabel>Projets livrés</StatLabel>
           </StatItem>
         </StatsBar>

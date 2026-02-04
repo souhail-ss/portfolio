@@ -164,7 +164,7 @@ export const Skills: React.FC = () => {
               category={category}
               index={index}
               icon={categoryConfig[category.category]?.icon || <Code2 />}
-              color={categoryConfig[category.category]?.color || 'rgba(99, 102, 241, 0.1)'}
+              color={categoryConfig[category.category]?.color || 'rgba(255, 107, 0, 0.1)'}
               description={categoryConfig[category.category]?.description || ''}
             />
           ))}

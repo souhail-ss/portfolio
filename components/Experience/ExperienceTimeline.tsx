@@ -8,11 +8,11 @@ import { portfolioData } from '../../data/portfolio.data';
 
 // Couleurs des entreprises basees sur leurs logos
 const companyColors: { [key: string]: string } = {
-  'Weneeds': '#6366F1',
+  'Weneeds': '#FF6B00',
   'Capgemini': '#0070AD',
   '42C': '#FF6B00',
   'Freelance': '#10B981',
-  'default': '#6366F1'
+  'default': '#FF6B00'
 };
 
 const getCompanyColor = (company: string) => {

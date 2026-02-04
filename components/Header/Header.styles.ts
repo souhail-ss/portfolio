@@ -23,18 +23,18 @@ export const HeaderInner = styled(motion.div)<{ scrolled: boolean }>`
 
 export const NavWrapper = styled(motion.div)<{ scrolled: boolean }>`
   display: flex;
+  height: 60px;
   justify-content: space-between;
   align-items: center;
   padding: ${({ scrolled, theme }) => scrolled ? theme.spacing.md : theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
-  background: ${({ scrolled }) => scrolled
-    ? 'rgba(3, 3, 3, 0.8)'
-    : 'rgba(3, 3, 3, 0.4)'};
+
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid ${({ scrolled, theme }) => scrolled
     ? theme.colors.border
-    : 'rgba(255, 255, 255, 0.05)'};
+    : 'rgba(255, 107, 0, 0.1)'};
   border-radius: ${({ theme }) => theme.borderRadius['2xl']};
+  box-shadow: ${({ scrolled }) => scrolled ? '0 4px 20px rgba(0, 0, 0, 0.3)' : 'none'};
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -71,7 +71,7 @@ export const ChatButton = styled(motion.button)`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
   }
 
   svg {
@@ -109,8 +109,8 @@ export const NavLinkStyled = styled.a<{ $isActive?: boolean }>`
   gap: ${({ theme }) => theme.spacing.xs};
 
   &:hover {
-    color: ${({ theme }) => theme.colors.text};
-    background: rgba(255, 255, 255, 0.05);
+    color: ${({ theme }) => theme.colors.primary};
+    background: rgba(255, 107, 0, 0.1);
   }
 `;
 
@@ -132,9 +132,9 @@ export const ContactButton = styled(motion.a)`
   gap: ${({ theme }) => theme.spacing.xs};
   padding: 10px 18px;
   min-width: 110px;
-  background: ${({ theme }) => theme.colors.text};
+  background: ${({ theme }) => theme.colors.primary};
   border-radius: ${({ theme }) => theme.borderRadius.full};
-  color: ${({ theme }) => theme.colors.background};
+  color: #FFFFFF;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   font-weight: ${({ theme }) => theme.fontWeights.semibold};
   text-decoration: none;
@@ -149,15 +149,15 @@ export const ContactButton = styled(motion.a)`
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255, 165, 0, 0.3) 0%, transparent 50%);
     opacity: 0;
     transition: opacity 0.3s;
   }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
-    color: ${({ theme }) => theme.colors.background};
+    box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
+    color: #FFFFFF;
 
     &::before {
       opacity: 1;
@@ -178,7 +178,7 @@ export const ContactButton = styled(motion.a)`
 export const MenuButton = styled.button`
   display: none;
   color: ${({ theme }) => theme.colors.text};
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 107, 0, 0.1);
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.sm};
@@ -186,7 +186,7 @@ export const MenuButton = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 107, 0, 0.2);
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -202,7 +202,7 @@ export const MobileMenu = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(3, 3, 3, 0.98);
+  background: rgba(10, 10, 10, 0.98);
   backdrop-filter: blur(20px);
   z-index: ${({ theme }) => theme.zIndices.modal};
   display: flex;
@@ -246,7 +246,7 @@ export const CloseButton = styled.button`
   top: ${({ theme }) => theme.spacing.xl};
   right: ${({ theme }) => theme.spacing.xl};
   color: ${({ theme }) => theme.colors.text};
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 107, 0, 0.1);
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   padding: ${({ theme }) => theme.spacing.sm};
@@ -254,6 +254,6 @@ export const CloseButton = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 107, 0, 0.2);
   }
 `;

@@ -79,7 +79,7 @@ const Title = styled.h2`
 const TitleBar = styled.div`
   height: 2px;
   width: 4rem;
-  background: #4f46e5;
+  background: #FF6B00;
   margin: 0 auto 1rem;
   border-radius: 9999px;
 `;
@@ -111,7 +111,7 @@ const CardContainer = styled.div<{ color?: string }>`
       case 'blue':
         return 'border-color: rgba(59, 130, 246, 0.2); background: rgba(23, 37, 84, 0.1); color: #bfdbfe;';
       case 'indigo':
-        return 'border-color: rgba(99, 102, 241, 0.2); background: rgba(49, 46, 129, 0.1); color: #c7d2fe;';
+        return 'border-color: rgba(255, 107, 0, 0.2); background: rgba(124, 45, 18, 0.1); color: #fed7aa;';
       case 'orange':
         return 'border-color: rgba(249, 115, 22, 0.2); background: rgba(124, 45, 18, 0.1); color: #fed7aa;';
       case 'slate':
@@ -230,7 +230,7 @@ const ConnectionLine = styled.div`
 const ConnectionFlow = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent, rgba(99, 102, 241, 0.4), transparent);
+  background: linear-gradient(to bottom, transparent, rgba(255, 107, 0, 0.4), transparent);
   height: 50%;
   width: 100%;
   animation: ${flowY} 3s linear infinite;
@@ -322,7 +322,7 @@ const ApiDot = styled.div<{ color?: string }>`
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: ${({ color }) => color || '#6366f1'};
+  background: ${({ color }) => color || '#FF6B00'};
 `;
 
 // Gateway Section
@@ -370,7 +370,7 @@ const GatewayInfo = styled.div`
   margin: 0 auto;
 
   svg {
-    color: #818cf8;
+    color: #FF8533;
   }
 `;
 
@@ -391,7 +391,7 @@ const ModuleItem = styled.div`
   border: 1px solid rgba(30, 41, 59, 0.5);
   font-size: 10px;
   font-weight: 700;
-  color: #a5b4fc;
+  color: #FF8533;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: -0.025em;
@@ -709,7 +709,7 @@ export const WeneedsArchitecture: React.FC = () => {
             <ApiList>
               {['Stripe', 'Pappers', 'RapidAPI', 'Calendly'].map(api => (
                 <ApiItem key={api}>
-                  <ApiDot color="#6366f1" /> {api}
+                  <ApiDot color="#FF6B00" /> {api}
                 </ApiItem>
               ))}
             </ApiList>
@@ -839,7 +839,7 @@ export const WeneedsArchitecture: React.FC = () => {
                   { name: 'PostgreSQL', type: 'Core', color: '#60a5fa' },
                   { name: 'MongoDB', type: 'Logs', color: '#34d399' },
                   { name: 'Redis', type: 'Cache', color: '#f87171' },
-                  { name: 'Weaviate', type: 'Vector', color: '#a78bfa' },
+                  { name: 'Weaviate', type: 'Vector', color: '#FF8533' },
                   { name: 'Elastic', type: 'Search', color: '#facc15' }
                 ].map((db, i) => (
                   <DatabaseItem key={i}>

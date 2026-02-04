@@ -57,8 +57,8 @@ export const GlobalStyles = createGlobalStyle`
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(ellipse 80% 50% at 20% -20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(129, 140, 248, 0.05) 0%, transparent 50%);
+        radial-gradient(ellipse 80% 50% at 20% -20%, rgba(255, 107, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255, 140, 0, 0.05) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
     }
@@ -70,7 +70,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ::selection {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 107, 0, 0.3);
     color: ${({ theme }) => theme.colors.text};
   }
 
@@ -167,14 +167,14 @@ export const GlobalStyles = createGlobalStyle`
 
   /* Utility classes */
   .gradient-text {
-    background: linear-gradient(135deg, #FFFFFF 0%, #6366F1 100%);
+    background: linear-gradient(135deg, #FF6B00 0%, #FFA500 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow {
-    box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 40px rgba(255, 107, 0, 0.3);
   }
 
   /* Focus states for accessibility */
@@ -239,10 +239,10 @@ export const GlobalStyles = createGlobalStyle`
 
   @keyframes glow {
     0%, 100% {
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+      box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
     }
     50% {
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 0 40px rgba(255, 107, 0, 0.4);
     }
   }
 

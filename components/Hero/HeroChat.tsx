@@ -34,7 +34,7 @@ export const HeroChat: React.FC = () => {
       setMessages([
         {
           id: 'welcome',
-          content: "Salut ! Je suis Yasser, Full Stack Developer. Posez-moi vos questions sur mon parcours, mes competences ou ma disponibilite !",
+          content: "Salut ! Je suis Souhail, Full Stack Developer. Posez-moi vos questions sur mon parcours, mes competences ou ma disponibilite !",
           role: 'assistant',
           timestamp: new Date(),
         },

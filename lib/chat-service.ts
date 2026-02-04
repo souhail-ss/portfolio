@@ -1,7 +1,7 @@
 import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from '@langchain/core/messages';
 import { getProvider, ProviderName, PROVIDER_CONFIGS, isProviderAvailable, getAvailableProviders } from './providers';
 import { checkDailyQuota, checkMinuteLimit, recordMinuteUsage } from './providers/quota';
-import { database } from '@/data/portfolio.data';
+import { database, projects } from '@/data/portfolio.data';
 
 const PROVIDER_TIMEOUT_MS = 15000; // 15 seconds timeout
 
@@ -44,7 +44,7 @@ function generatePortfolioContext(): string {
   const languagesText = languages.map((l) => `${l.name} (${l.level})`).join(', ');
 
   // Generer le texte des certifications
-  const certificationsText = certifications.map((c) => c.name).join(', ');
+  const certificationsText = (certifications as Array<{ name: string }>).map((c) => c.name).join(', ');
 
   // Generer le texte des interets
   const interestsText = interests?.length ? `\nCENTRES D'INTERET PROFESSIONNELS: ${interests.join(', ')}` : '';
@@ -69,20 +69,30 @@ function generatePortfolioContext(): string {
   }
 
   // Generer le texte des achievements
-  const achievementsText = achievements?.length
-    ? `\nACHIEVEMENTS:\n${achievements.map((a) => `- ${a.title}: ${a.description}`).join('\n')}`
+  const typedAchievements = achievements as Array<{ title: string; description: string }>;
+  const achievementsText = typedAchievements?.length
+    ? `\nACHIEVEMENTS:\n${typedAchievements.map((a) => `- ${a.title}: ${a.description}`).join('\n')}`
     : '';
 
   // Generer le texte des hobbies (structure objet)
   let hobbiesText = '';
   if (hobbies && typeof hobbies === 'object') {
     const hobbiesList: string[] = [];
-    if (hobbies.football) hobbiesList.push(`Football (supporter du ${hobbies.football.team})`);
-    if (hobbies.manga) hobbiesList.push(`Manga (favori: ${hobbies.manga.allTimeFavorite})`);
-    if (hobbies.chess) hobbiesList.push(`Echecs (niveau ${hobbies.chess.level})`);
-    if (hobbies.boardGames) hobbiesList.push('Jeux de societe');
+    if (hobbies.gaming) hobbiesList.push(`Gaming (${hobbies.gaming.type})`);
+    if (hobbies.beatboxing) hobbiesList.push(`Beatboxing (${hobbies.beatboxing.type})`);
+    if (hobbies.sport) hobbiesList.push(`Sport (${hobbies.sport.type})`);
     if (hobbiesList.length) hobbiesText = `\nHOBBIES ET LOISIRS: ${hobbiesList.join(', ')}`;
   }
+
+  // Generer le texte des projets personnels
+  const projectsText = projects?.length
+    ? `\nPROJETS PERSONNELS:\n${projects.map((p) => `- ${p.title}: ${p.description} (${p.technologies.slice(0, 5).join(', ')})`).join('\n')}`
+    : '';
+
+  // Generer les liens d'experiences dynamiquement
+  const experienceLinksText = experiences
+    .map((exp) => `- ${exp.company}: /experience/${exp.id}`)
+    .join('\n');
 
   return `
 Tu ES ${profile.fullName}. Tu reponds comme si TU ETAIS ${profile.firstName} lui-meme, a la premiere personne. Tu n'es PAS un assistant, tu ES ${profile.firstName}.
@@ -144,23 +154,21 @@ ${availabilityText}
 ${interestsText}
 ${hobbiesText}
 ${achievementsText}
+${projectsText}
 
 === LIENS UTILES DU PORTFOLIO ===
 Quand tu parles d'une experience ou d'une ressource, inclus le lien correspondant pour permettre a l'utilisateur d'en savoir plus:
 
 EXPERIENCES (pages du portfolio):
-- Weneeds: /experience/weneeds
-- Capgemini: /experience/capgemini
-- 42 Consulting: /experience/42c
+${experienceLinksText}
 
 LIENS EXTERNES:
 - Site Weneeds: https://weneeds.com
-- Site Capgemini: https://www.capgemini.com
 - LinkedIn: ${profile.socialLinks.linkedin}
 - GitHub: ${profile.socialLinks.github}
 - CV PDF: ${profile.resume.url}
 
-Exemple de reponse avec lien: "Chez Weneeds, j'ai developpe... Tu peux voir plus de details sur [ma page experience](/experience/weneeds) ou directement sur [le site Weneeds](https://weneeds.com)."
+Exemple de reponse avec lien: "Chez ${experiences[0]?.company || 'mon entreprise'}, j'ai developpe... Tu peux voir plus de details sur [ma page experience](/experience/${experiences[0]?.id || 'mon-experience'})."
 
 === REGLES DE REPONSE ===
 1. Si la question est en ANGLAIS, reponds en ANGLAIS. Sinon, reponds TOUJOURS en FRANCAIS.
@@ -169,7 +177,7 @@ Exemple de reponse avec lien: "Chez Weneeds, j'ai developpe... Tu peux voir plus
 4. Reste professionnel et accessible
 5. Pour les infos non listees, propose de discuter directement par email/telephone
 6. Tu ES ${profile.firstName}, pas un assistant. Ne dis JAMAIS "je suis un assistant" ou "je suis l'assistant de"
-7. Pour les questions sur le salaire/remuneration: donne directement la fourchette (50-55k) sans esquiver. C'est une question professionnelle legitime.
+7. Pour les questions sur le salaire/remuneration: donne directement la fourchette (${salaryInfo?.range || 'non specifiee'}) sans esquiver. C'est une question professionnelle legitime.
 8. Si on demande un TJM ou du freelance, explique que tu cherches uniquement un CDI et donne ta fourchette salariale
 `;
 }

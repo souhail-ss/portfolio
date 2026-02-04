@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website for Yasser Loukniti built with Next.js 14 (App Router). Features an AI-powered chatbot that responds as Yasser using multi-provider LLM fallback, and an admin dashboard for analytics.
+Personal portfolio website for Souhail Ziyadi built with Next.js 14 (App Router). Features an AI-powered chatbot that responds as Souhail using multi-provider LLM fallback, and an admin dashboard for analytics.
 
 ## Commands
 
@@ -49,7 +49,7 @@ Located at `/dashboard` - requires authentication. Manages:
 - Provider error tracking
 
 ### Data Flow
-Portfolio content comes from `data/database.json` → transformed in `data/portfolio.data.ts` → consumed by components. The chatbot uses a system prompt in `lib/chat-service.ts` containing Yasser's profile data.
+Portfolio content comes from `data/database.json` → transformed in `data/portfolio.data.ts` → consumed by components. The chatbot uses a system prompt in `lib/chat-service.ts` containing Souhail's profile data.
 
 ## Conventions
 

@@ -13,18 +13,18 @@ const FloatingButton = styled(motion.button)`
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: ${({ theme }) => theme.colors.primary};
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.4);
   z-index: 1000;
   color: white;
 
   &:hover {
-    box-shadow: 0 6px 30px rgba(99, 102, 241, 0.6);
+    box-shadow: 0 6px 30px rgba(255, 107, 0, 0.6);
   }
 
   svg {
@@ -50,7 +50,7 @@ const Pulse = styled.span`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: rgba(99, 102, 241, 0.4);
+  background: rgba(255, 107, 0, 0.4);
   animation: pulse 2s ease-out infinite;
 
   @keyframes pulse {

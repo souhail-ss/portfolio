@@ -103,7 +103,7 @@ export const TypingText = styled.span``;
 export const Cursor = styled.span`
   animation: ${blink} 1s infinite;
   font-weight: 300;
-  color: #6366F1;
+  color: #FF6B00;
 `;
 
 export const MessageGroup = styled.div`
@@ -203,7 +203,7 @@ export const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #6366F1;
+    border-color: #FF6B00;
   }
 `;
 
@@ -213,7 +213,7 @@ export const SendButton = styled(motion.button)`
   justify-content: center;
   gap: 8px;
   padding: 16px 24px;
-  background: #6366F1;
+  background: #FF6B00;
   border: none;
   border-radius: 16px;
   color: #fff;
@@ -224,7 +224,7 @@ export const SendButton = styled(motion.button)`
   white-space: nowrap;
 
   &:hover:not(:disabled) {
-    background: #5558E3;
+    background: #CC5500;
   }
 
   &:disabled {

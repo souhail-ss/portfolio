@@ -1,22 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { X, Send } from 'lucide-react';
+import { Minus, Square, X, Send } from 'lucide-react';
 import { profile } from '../../data/portfolio.data';
+import { useChat, Message } from '@/context/ChatContext';
 import * as S from './ChatModal.styles';
-
-interface Message {
-  id: string;
-  content: string;
-  role: 'user' | 'assistant';
-  timestamp: Date;
-  isTyping?: boolean; // Pour l'animation de typing
-}
-
-interface ChatModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  initialQuestion?: string;
-}
 
 // Simple markdown parser for chat messages
 const parseMarkdown = (text: string): React.ReactNode => {
@@ -41,7 +28,7 @@ const parseMarkdown = (text: string): React.ReactNode => {
           href={match[3]}
           target={isExternal ? '_blank' : undefined}
           rel={isExternal ? 'noopener noreferrer' : undefined}
-          style={{ color: '#6366F1', textDecoration: 'underline' }}
+          style={{ color: '#FF6B00', textDecoration: 'underline' }}
         >
           {match[2]}
         </a>
@@ -94,11 +81,22 @@ const TypedMessage: React.FC<{
 
 // API is now on the same origin with Next.js
 
-export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQuestion }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+export const ChatModal: React.FC = () => {
+  const {
+    chatState,
+    initialQuestion,
+    messages,
+    isLoading,
+    sendMessage: sendMessageToContext,
+    markMessageComplete,
+    closeChat,
+    minimizeToBar,
+    minimizeToIcon,
+    clearInitialQuestion
+  } = useChat();
+
+  const isOpen = chatState === 'expanded';
   const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const [hasInitialized, setHasInitialized] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -119,7 +117,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') closeChat();
     };
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
@@ -129,102 +127,40 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, closeChat]);
 
   useEffect(() => {
     if (isOpen && initialQuestion && !hasInitialized) {
       setHasInitialized(true);
+      clearInitialQuestion();
       setTimeout(() => {
-        sendMessageInternal(initialQuestion);
+        sendMessageToContext(initialQuestion);
       }, 300);
     }
-  }, [isOpen, initialQuestion, hasInitialized]);
+  }, [isOpen, initialQuestion, hasInitialized, sendMessageToContext, clearInitialQuestion]);
 
   useEffect(() => {
     if (!isOpen) {
-      setMessages([]);
-      setSessionId(null);
       setHasInitialized(false);
     }
   }, [isOpen]);
 
-  const markMessageComplete = useCallback((messageId: string) => {
-    setMessages(prev => prev.map(msg =>
-      msg.id === messageId ? { ...msg, isTyping: false } : msg
-    ));
-  }, []);
-
-  const sendMessageInternal = async (messageText: string) => {
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: messageText,
-      role: 'user',
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: messageText,
-          sessionId,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
-
-      const data = await response.json();
-
-      if (data.sessionId) {
-        setSessionId(data.sessionId);
-      }
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: data.message,
-        role: 'assistant',
-        timestamp: new Date(),
-        isTyping: true, // Commence avec l'animation
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      console.error('Error sending message:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: "Une erreur s'est produite. Contactez-moi directement a yass_official@outlook.fr",
-        role: 'assistant',
-        timestamp: new Date(),
-        isTyping: true,
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const sendMessage = async () => {
+  const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
     const message = inputValue.trim();
     setInputValue('');
-    await sendMessageInternal(message);
+    await sendMessageToContext(message);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      handleSend();
     }
   };
 
   const handleSuggestionClick = (question: string) => {
-    sendMessageInternal(question);
+    sendMessageToContext(question);
   };
 
   const suggestions = [
@@ -233,7 +169,6 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
     "Qu'as-tu construit chez Weneeds ?",
   ];
 
-  // Verifier si un message est en train de s'afficher
   const isAnyMessageTyping = messages.some(m => m.isTyping);
 
   return (
@@ -244,7 +179,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          onClick={onClose}
+          onClick={closeChat}
         >
           <S.ModalContainer
             initial={{ opacity: 0, y: 30, scale: 0.97 }}
@@ -253,14 +188,24 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
             transition={{ type: 'spring', damping: 30, stiffness: 400 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <S.CloseButton onClick={onClose} aria-label="Fermer">
-              <X size={20} />
-            </S.CloseButton>
+            <S.ModalHeader>
+              <S.ControlsRow>
+                <S.ControlButton onClick={minimizeToIcon} title="Reduire en icone">
+                  <Minus />
+                </S.ControlButton>
+                <S.ControlButton onClick={minimizeToBar} title="Minimiser">
+                  <Square />
+                </S.ControlButton>
+                <S.ControlButton onClick={closeChat} $variant="close" title="Fermer">
+                  <X />
+                </S.ControlButton>
+              </S.ControlsRow>
+            </S.ModalHeader>
 
             <S.MessagesContainer>
               {messages.length === 0 && !isLoading && (
                 <S.EmptyState>
-                  <S.EmptyTitle>Je suis le clone IA de Yasser</S.EmptyTitle>
+                  <S.EmptyTitle>Je suis le clone IA de Souhail</S.EmptyTitle>
                   <S.EmptyText>
                     Posez-moi vos questions sur mon parcours, mes experiences ou mes competences techniques !
                   </S.EmptyText>
@@ -332,7 +277,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, initialQu
                 rows={1}
               />
               <S.SendButton
-                onClick={sendMessage}
+                onClick={handleSend}
                 disabled={!inputValue.trim() || isLoading || isAnyMessageTyping}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

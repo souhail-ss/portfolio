@@ -46,7 +46,7 @@ export const ProfileImage = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.2) 0%, rgba(255, 140, 0, 0.1) 100%);
   border: 2px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   margin-bottom: 20px;

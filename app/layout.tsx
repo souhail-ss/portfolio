@@ -3,8 +3,8 @@ import StyledComponentsRegistry from "@/lib/registry";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Yasser Loukniti - Full Stack Developer",
-  description: "Portfolio de Yasser Loukniti - Full Stack Developer specialise en TypeScript, NestJS, Next.js et AWS",
+  title: "Souhail Ziyadi - Full Stack Developer",
+  description: "Portfolio de Souhail Ziyadi - Full Stack Developer specialise en TypeScript, NestJS et Next.js",
 };
 
 export default function RootLayout({
